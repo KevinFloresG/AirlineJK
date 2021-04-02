@@ -146,6 +146,7 @@ public class UsersDao {
         }
         
         Userss f = s.get("123");
+        
         System.out.println(f.getName()+">>"+f.getDateOfBirth().toString());
     }
     
