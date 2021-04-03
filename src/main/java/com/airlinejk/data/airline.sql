@@ -93,7 +93,7 @@ create table flights (id number not null,
 					
 					
 create table reservations (id number not null,
-                    flight varchar2(20) not null,
+                    flight number not null,
 					userID varchar2(20) not null,
 					totalPrice number not null,
 					airplane_id varchar2(20) not null,
@@ -257,7 +257,7 @@ end ins_flight;
 /
 show error
 
-create or replace procedure ins_reservation(PFlight in varchar2, PUser in varchar2, PPrice in number, PAId in varchar2, 
+create or replace procedure ins_reservation(PFlight in number, PUser in varchar2, PPrice in number, PAId in varchar2, 
 PPType in varchar2, PSeatQ in number) is
 begin
     insert into reservations(id, flight, userID, totalPrice, airplane_id, typeOfPayment, seatQuantity, checkedInQuantity) 

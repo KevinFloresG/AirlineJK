@@ -3,7 +3,6 @@ package com.airlinejk.daos;
 import com.airlinejk.business_logic.Userss;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -114,7 +113,7 @@ public class UsersDao {
                 result = constructUser(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all users.");
+            System.out.println("Was imposible to get user.");
         }
         return result;
     }
@@ -132,22 +131,6 @@ public class UsersDao {
         user.setCellphone(rs.getString("cellphone"));
         user.setIsAdmin(rs.getInt("isAdmin"));
         return user;
-    }
-    
-    public static void main(String[] args){
-        UsersDao s = new UsersDao();
-        Date date = new Date(System.currentTimeMillis());
-        Userss user = new Userss("b","bas","bas","bas","bas","bas","bas","bas",date,0);
-        //s.delete("b");
-        
-        List<Userss> l = s.all();
-        for(Userss g: l){
-            System.out.println(g.getName()+">>"+g.getDateOfBirth().toString());
-        }
-        
-        Userss f = s.get("123");
-        
-        System.out.println(f.getName()+">>"+f.getDateOfBirth().toString());
     }
     
 }
