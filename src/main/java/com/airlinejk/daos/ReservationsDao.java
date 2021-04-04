@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class ReservationsDao {
     
@@ -18,14 +18,14 @@ public class ReservationsDao {
     private UsersDao userDao;
     private AirplanesDao airplaneDao;
     private PaymentTypesDao payTypeDao;
-    //PFlight in varchar2, PUser in varchar2, 
-    //PPrice in number, PAId in varchar2, 
-    //PPType in varchar2, PSeatQ in number
+
     
     private static final String INSERT = "{call ins_reservation(?,?,?,?,?,?)}";
     private static final String UPDATE = "{call upd_resCSeats(?,?)}";
     private static final String DELETE = "{call del_reservation(?)}";
     private static final String ALL = "select * from reservations";
+    private static final String ALL_USER_RES = "select * from reservations where userID = ?";
+    private static final String ALL_FLIGHT_RES = "select * from reservations where flight like ?";
     private static final String GET = "select * from reservations where id = ?";
     
     public ReservationsDao(){
@@ -39,7 +39,7 @@ public class ReservationsDao {
         try {
             CallableStatement cs;
             cs = conn.getConn().prepareCall(INSERT);
-            cs.setInt(1, reservation.getFlight());
+            cs.setString(1, reservation.getFlightInfo());
             cs.setString(2, reservation.getUser().getUsername());
             cs.setDouble(3, reservation.getTotalPrice());
             cs.setString(4, reservation.getAirplane().getId());
@@ -48,7 +48,7 @@ public class ReservationsDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert reservation.");
+            System.out.println("Error: It was imposible to insert reservation.");
         }
     }
     
@@ -61,7 +61,7 @@ public class ReservationsDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update reservation info.");
+            System.out.println("Error: It was imposible to update reservation info.");
         }
     }
     
@@ -73,7 +73,7 @@ public class ReservationsDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete reservation.");
+            System.out.println("Error: It was imposible to delete reservation.");
         }
     }
     
@@ -86,22 +86,52 @@ public class ReservationsDao {
                 result.add(constructReservations(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all Reservations.");
+            System.out.println("Error: It was imposible to list all Reservations.");
         }
         return result;
     }
     
-    public Reservations get(String id){
+    public List<Reservations> allUserRes(String userID){
+        List<Reservations> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(ALL_USER_RES);
+            ps.setString(1, userID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructReservations(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list all User Reservations.");
+        }
+        return result;
+    }
+    
+    public List<Reservations> allFlightRes(String flightInfo){
+        List<Reservations> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(ALL_FLIGHT_RES);
+            ps.setString(1, "%" + flightInfo + "%");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructReservations(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list all Flight Reservations.");
+        }
+        return result;
+    }
+    
+    public Reservations get(Integer id){
         Reservations result = new Reservations();
         try{
             PreparedStatement ps = conn.getConn().prepareStatement(GET);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 result = constructReservations(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get reservation.");
+            System.out.println("Error: It was imposible to get reservation.");
         }
         return result;
     }
@@ -109,11 +139,11 @@ public class ReservationsDao {
     private Reservations constructReservations(ResultSet rs) throws SQLException{
         Reservations reservation = new Reservations();
         reservation.setId(rs.getInt("id"));
-        reservation.setFlight(rs.getInt("flight"));
-        reservation.setUser(userDao.get("userID"));
+        reservation.setFlightInfo(rs.getString("flightInfo"));
+        reservation.setUser(userDao.get(rs.getString("userID")));
         reservation.setTotalPrice(rs.getDouble("totalPrice"));
-        reservation.setAirplane(airplaneDao.get("airplane_id"));
-        reservation.setTypeOfPayment(payTypeDao.get("typeOfPayment"));
+        reservation.setAirplane(airplaneDao.get(rs.getString("airplane_id")));
+        reservation.setTypeOfPayment(payTypeDao.get(rs.getString("typeOfPayment")));
         reservation.setSeatQuantity(rs.getInt("seatQuantity"));
         reservation.setCheckedInQuantity(rs.getInt("checkedInQuantity"));
         return reservation;

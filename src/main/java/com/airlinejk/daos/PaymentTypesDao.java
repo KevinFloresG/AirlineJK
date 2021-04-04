@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class PaymentTypesDao {
     
@@ -35,7 +35,7 @@ public class PaymentTypesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert payType.");
+            System.out.println("Error: It was imposible to insert payType.");
         }
     }
     
@@ -48,7 +48,7 @@ public class PaymentTypesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update payType info.");
+            System.out.println("Error: It was imposible to update payType info.");
         }
     }
     
@@ -60,7 +60,7 @@ public class PaymentTypesDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete payType.");
+            System.out.println("Error: It was imposible to delete payType.");
         }
     }
     
@@ -73,7 +73,7 @@ public class PaymentTypesDao {
                 result.add(constructPaymenttypes(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all Paymenttypes.");
+            System.out.println("Error: It was imposible to list all Paymenttypes.");
         }
         return result;
     }
@@ -88,7 +88,7 @@ public class PaymentTypesDao {
                 result = constructPaymenttypes(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get payType.");
+            System.out.println("Error: It was imposible to get payType.");
         }
         return result;
     }

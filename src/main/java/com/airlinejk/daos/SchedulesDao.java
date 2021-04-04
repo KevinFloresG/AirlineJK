@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class SchedulesDao {
     
@@ -35,7 +35,7 @@ public class SchedulesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert schedule.");
+            System.out.println("Error: It was imposible to insert schedule.");
         }
     }
     
@@ -49,7 +49,7 @@ public class SchedulesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update schedule info.");
+            System.out.println("Error: It was imposible to update schedule info.");
         }
     }
     
@@ -61,7 +61,7 @@ public class SchedulesDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete schedule.");
+            System.out.println("Error: It was imposible to delete schedule.");
         }
     }
     
@@ -74,7 +74,7 @@ public class SchedulesDao {
                 result.add(constructSchedules(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all schedules.");
+            System.out.println("Error: It was imposible to list all schedules.");
         }
         return result;
     }
@@ -89,7 +89,7 @@ public class SchedulesDao {
                 result = constructSchedules(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get schedule.");
+            System.out.println("Error: It was imposible to get schedule.");
         }
         return result;
     }

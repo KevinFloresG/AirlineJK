@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class RoutesDao {
     
@@ -23,6 +23,10 @@ public class RoutesDao {
     private static final String UPDATE = "{call upd_route(?,?,?,?,?,?,?)}";
     private static final String DELETE = "{call del_route(?)}";
     private static final String ALL = "select * from routes";
+    private static final String SEARCH_BY_ORIGIN = "select * from routes where origin = ?";
+    private static final String SEARCH_BY_DESTINATION = "select * from routes where destination = ?";
+    private static final String SEARCH_BY_ORIGIN_DESTINATION = "select * from routes where origin = ? and destination = ?";
+    private static final String SEARCH_BY_ORIGIN_DESTINATION_LIKE = "select * from (routes r inner join cities o on r.origin = o.id) inner join cities d on r.destination = d.id where o.name like ? and d.name like ?";
     private static final String GET = "select * from routes where id = ?";
     
     public RoutesDao(){
@@ -46,7 +50,7 @@ public class RoutesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert route.");
+            System.out.println("Error: It was imposible to insert route.");
         }
     }
     
@@ -64,7 +68,7 @@ public class RoutesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update route info.");
+            System.out.println("Error: It was imposible to update route info.");
         }
     }
     
@@ -76,7 +80,7 @@ public class RoutesDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete route.");
+            System.out.println("Error: It was imposible to delete route.");
         }
     }
     
@@ -89,7 +93,69 @@ public class RoutesDao {
                 result.add(constructRoutes(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all Routes.");
+            System.out.println("Error: It was imposible to list all Routes.");
+        }
+        return result;
+    }
+    
+    public List<Routes> searchByOrigin(String origin){
+        List<Routes> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(SEARCH_BY_ORIGIN);
+            ps.setString(1, origin);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructRoutes(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list routes with specified origin.");
+        }
+        return result;
+    }
+    
+    public List<Routes> searchByDestination(String destination){
+        List<Routes> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(SEARCH_BY_DESTINATION);
+            ps.setString(1, destination);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructRoutes(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list routes with specified destination.");
+        }
+        return result;
+    }
+    
+    public List<Routes> searchByOriDes(String origin, String destination){
+        List<Routes> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(SEARCH_BY_ORIGIN_DESTINATION);
+            ps.setString(1, origin);
+            ps.setString(2, destination);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructRoutes(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list routes with specified origin and destination.");
+        }
+        return result;
+    }
+    
+    public List<Routes> searchByOriDesWithLike(String origin, String destination){
+        List<Routes> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(SEARCH_BY_ORIGIN_DESTINATION_LIKE);
+            ps.setString(1, "%" + origin + "%");
+            ps.setString(2, "%" + destination + "%");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructRoutesForLikeSearch(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list routes with specified origin and destination.");
         }
         return result;
     }
@@ -104,7 +170,7 @@ public class RoutesDao {
                 result = constructRoutes(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get route.");
+            System.out.println("Error: It was imposible to get route.");
         }
         return result;
     }
@@ -118,6 +184,18 @@ public class RoutesDao {
         route.setDestination(cityDao.get(rs.getString("destination")));
         route.setAirplaneId(airplaneDao.get(rs.getString("airplane_id")));
         route.setSchedule(scheduleDao.get(rs.getInt("schedule")));
+        return route;
+    }
+    
+    private Routes constructRoutesForLikeSearch(ResultSet rs) throws SQLException{
+        Routes route = new Routes();
+        route.setId(rs.getString("r.id"));
+        route.setDurationhours(rs.getInt("r.durationHours"));
+        route.setDurationminutes(rs.getInt("r.durationMinutes"));
+        route.setOrigin(cityDao.get(rs.getString("r.origin")));
+        route.setDestination(cityDao.get(rs.getString("r.destination")));
+        route.setAirplaneId(airplaneDao.get(rs.getString("r.airplane_id")));
+        route.setSchedule(scheduleDao.get(rs.getInt("r.schedule")));
         return route;
     }
     

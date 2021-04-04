@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class AirplanetypesDao {
     
@@ -39,7 +39,7 @@ public class AirplanetypesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert airplane type.");
+            System.out.println("Error: It was imposible to insert airplane type.");
         }
     }
     
@@ -56,7 +56,7 @@ public class AirplanetypesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update airplane type info.");
+            System.out.println("Error: It was imposible to update airplane type info.");
         }
     }
     
@@ -68,7 +68,7 @@ public class AirplanetypesDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete airplane type.");
+            System.out.println("Error: It was imposible to delete airplane type.");
         }
     }
     
@@ -81,7 +81,7 @@ public class AirplanetypesDao {
                 result.add(constructAirplanetypes(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all airplane types.");
+            System.out.println("Error: It was imposible to list all airplane types.");
         }
         return result;
     }
@@ -96,7 +96,7 @@ public class AirplanetypesDao {
                 result = constructAirplanetypes(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get airplane type.");
+            System.out.println("Error: It was imposible to get airplane type.");
         }
         return result;
     }

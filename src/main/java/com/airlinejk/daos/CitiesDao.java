@@ -64,7 +64,7 @@ public class CitiesDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete city.");
+            System.out.println("Error: It was imposible to delete city.");
         }
     }
     
@@ -77,7 +77,7 @@ public class CitiesDao {
                 result.add(constructCities(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all cities.");
+            System.out.println("Error: It was imposible to list all cities.");
         }
         return result;
     }
@@ -92,7 +92,7 @@ public class CitiesDao {
                 result = constructCities(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get city.");
+            System.out.println("Error: It was imposible to get city.");
         }
         return result;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class FlightsDao {
     
@@ -22,6 +22,9 @@ public class FlightsDao {
     private static final String UPDATE_FLIGHTINFO = "{call upd_flightInfo(?,?,?,?,?,?,?)}";
     private static final String DELETE = "{call del_flight(?)}";
     private static final String ALL = "select * from flights";
+    private static final String ALL_DISCOUNT_FLIGHTS = "select * from flights where discount != 0";
+    private static final String SEARCH_BY_ROUTE = "select * from flights where route = ?";
+    private static final String SEARCH_BY_ROUTE_DISCOUNT = "select * from flights where route = ? and discount != 0";
     private static final String GET = "select * from flights where id = ?";
     
     public FlightsDao(){
@@ -42,7 +45,7 @@ public class FlightsDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert flight.");
+            System.out.println("Error: It was imposible to insert flight.");
         }
     }
     
@@ -60,7 +63,7 @@ public class FlightsDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update flight info.");
+            System.out.println("Error: It was imposible to update flight info.");
         }
     }
     
@@ -73,7 +76,7 @@ public class FlightsDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update flight seats.");
+            System.out.println("Error: It was imposible to update flight seats.");
         }
     }
     
@@ -85,7 +88,7 @@ public class FlightsDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete flight.");
+            System.out.println("Error: It was imposible to delete flight.");
         }
     }
     
@@ -98,7 +101,51 @@ public class FlightsDao {
                 result.add(constructFlights(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all Flights.");
+            System.out.println("Error: It was imposible to list all Flights.");
+        }
+        return result;
+    }
+    
+    public List<Flights> allDiscount(){
+        List<Flights> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(ALL_DISCOUNT_FLIGHTS);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructFlights(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list all Flights with Discount.");
+        }
+        return result;
+    }
+    
+    public List<Flights> searchByRoute(String route){
+        List<Flights> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(SEARCH_BY_ROUTE);
+            ps.setString(1, route);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructFlights(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list Flights with specified route.");
+        }
+        return result;
+    }
+    
+    public List<Flights> searchByRouteWithDiscount(String route){
+        List<Flights> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(SEARCH_BY_ROUTE_DISCOUNT);
+            ps.setString(1, route);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructFlights(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list Flights with discount and specified route.");
         }
         return result;
     }
@@ -113,7 +160,7 @@ public class FlightsDao {
                 result = constructFlights(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get flight.");
+            System.out.println("Error: It was imposible to get flight.");
         }
         return result;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador 
  */
 public class UsersDao {
     
@@ -44,7 +44,7 @@ public class UsersDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert user.");
+            System.out.println("Error: It was imposible to insert user.");
         }
     }
     
@@ -60,7 +60,7 @@ public class UsersDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update user info.");
+            System.out.println("Error: It was imposible to update user info.");
         }
     }
     
@@ -73,7 +73,7 @@ public class UsersDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update user password.");
+            System.out.println("Error: It was imposible to update user password.");
         }
     }
     
@@ -85,7 +85,7 @@ public class UsersDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete user.");
+            System.out.println("Error: It was imposible to delete user.");
         }
     }
     
@@ -98,7 +98,7 @@ public class UsersDao {
                 result.add(constructUser(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all users.");
+            System.out.println("Error: It was imposible to list all users.");
         }
         return result;
     }
@@ -113,7 +113,7 @@ public class UsersDao {
                 result = constructUser(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get user.");
+            System.out.println("Error: It was imposible to get user.");
         }
         return result;
     }

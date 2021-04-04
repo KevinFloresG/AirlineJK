@@ -35,7 +35,7 @@ public class CountriesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert country.");
+            System.out.println("Error: It was imposible to insert country.");
         }
     }
     
@@ -48,7 +48,7 @@ public class CountriesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update country info.");
+            System.out.println("Error: It was imposible to update country info.");
         }
     }
     
@@ -60,7 +60,7 @@ public class CountriesDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete country.");
+            System.out.println("Error: It was imposible to delete country.");
         }
     }
     
@@ -73,7 +73,7 @@ public class CountriesDao {
                 result.add(constructCountries(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all countries.");
+            System.out.println("Error: It was imposible to list all countries.");
         }
         return result;
     }
@@ -88,7 +88,7 @@ public class CountriesDao {
                 result = constructCountries(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get country.");
+            System.out.println("Error: It was imposible to get country.");
         }
         return result;
     }

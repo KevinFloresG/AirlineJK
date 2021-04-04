@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class AirplanesDao {
     
@@ -21,6 +21,7 @@ public class AirplanesDao {
     private static final String UPDATE = "{call upd_airplane(?,?,?)}";
     private static final String DELETE = "{call del_airplane(?)}";
     private static final String ALL = "select * from airplanes";
+    private static final String ALL_TYPE_APL = "select * from airplanes where airplaneType_id = ?";
     private static final String GET = "select * from airplanes where id = ?";
     
     public AirplanesDao(){
@@ -38,7 +39,7 @@ public class AirplanesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to insert airplane.");
+            System.out.println("Error: It was imposible to insert airplane.");
         }
     }
     
@@ -52,7 +53,7 @@ public class AirplanesDao {
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to update airplane info.");
+            System.out.println("Error: It was imposible to update airplane info.");
         }
     }
     
@@ -64,7 +65,7 @@ public class AirplanesDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Was imposible to delete airplane.");
+            System.out.println("Error: It was imposible to delete airplane.");
         }
     }
     
@@ -77,7 +78,22 @@ public class AirplanesDao {
                 result.add(constructAirplanes(rs));
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to list all airplanes.");
+            System.out.println("Error: It was imposible to list all airplanes.");
+        }
+        return result;
+    }
+    
+    public List<Airplanes> allTypeAirplanes(String typeId){
+        List<Airplanes> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(ALL_TYPE_APL);
+            ps.setString(1, typeId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructAirplanes(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list all airplanes.");
         }
         return result;
     }
@@ -92,7 +108,7 @@ public class AirplanesDao {
                 result = constructAirplanes(rs);
             }
         }catch(SQLException ex){
-            System.out.println("Was imposible to get airplane.");
+            System.out.println("Error: It was imposible to get airplane.");
         }
         return result;
     }

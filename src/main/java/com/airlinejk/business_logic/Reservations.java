@@ -6,7 +6,8 @@ package com.airlinejk.business_logic;
  */
 public class Reservations {
     
-    private Integer id, seatQuantity, checkedInQuantity, flight;
+    private Integer id, seatQuantity, checkedInQuantity;
+    private String flightInfo;
     private Userss user;
     private double totalPrice;
     private Airplanes airplane;
@@ -15,11 +16,11 @@ public class Reservations {
     public Reservations() {
     }
 
-    public Reservations(Integer id, Integer seatQuantity, Integer checkedInQuantity, Integer flight, Userss user, double totalPrice, Airplanes airplane, Paymenttypes typeOfPayment) {
+    public Reservations(Integer id, Integer seatQuantity, Integer checkedInQuantity, String flightInfo, Userss user, double totalPrice, Airplanes airplane, Paymenttypes typeOfPayment) {
         this.id = id;
         this.seatQuantity = seatQuantity;
         this.checkedInQuantity = checkedInQuantity;
-        this.flight = flight;
+        this.flightInfo = flightInfo;
         this.user = user;
         this.totalPrice = totalPrice;
         this.airplane = airplane;
@@ -50,12 +51,12 @@ public class Reservations {
         this.checkedInQuantity = checkedInQuantity;
     }
 
-    public Integer getFlight() {
-        return flight;
+    public String getFlightInfo() {
+        return flightInfo;
     }
 
-    public void setFlight(Integer flight) {
-        this.flight = flight;
+    public void setFlightInfo(String flight) {
+        this.flightInfo = flight;
     }
 
     public Userss getUser() {
