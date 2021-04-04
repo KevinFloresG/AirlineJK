@@ -2,7 +2,7 @@ package com.airlinejk.business_logic;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 
 public class Routes{
