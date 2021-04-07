@@ -12,6 +12,10 @@
         <servlet-name>AirplanesService</servlet-name>
         <servlet-class>com.airlinejk.services.AirplanesService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PlaneTypesService</servlet-name>
+        <servlet-class>com.airlinejk.services.PlaneTypesService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CitiesService</servlet-name>
         <url-pattern>/cities/all</url-pattern>
@@ -35,6 +39,14 @@
         <url-pattern>/airplanes/update</url-pattern>
         <url-pattern>/airplanes/add</url-pattern>
         <url-pattern>/airplanes/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PlaneTypesService</servlet-name>
+        <url-pattern>/planetypes/get</url-pattern>
+        <url-pattern>/planetypes/all</url-pattern>
+        <url-pattern>/planetypes/update</url-pattern>
+        <url-pattern>/planetypes/add</url-pattern>
+        <url-pattern>/planetypes/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
