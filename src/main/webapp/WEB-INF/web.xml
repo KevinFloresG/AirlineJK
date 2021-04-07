@@ -7,6 +7,10 @@
     <servlet-mapping>
         <servlet-name>CitiesService</servlet-name>
         <url-pattern>/cities/all</url-pattern>
+        <url-pattern>/cities/get</url-pattern>
+        <url-pattern>/cities/update</url-pattern>
+        <url-pattern>/cities/delete</url-pattern>
+        <url-pattern>/cities/add</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
