@@ -24,6 +24,26 @@
         <servlet-name>RoutesService</servlet-name>
         <servlet-class>com.airlinejk.services.RoutesService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PayTypesService</servlet-name>
+        <servlet-class>com.airlinejk.services.PayTypesService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReservationsService</servlet-name>
+        <servlet-class>com.airlinejk.services.ReservationsService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SchedulesService</servlet-name>
+        <servlet-class>com.airlinejk.services.SchedulesService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TicketsService</servlet-name>
+        <servlet-class>com.airlinejk.services.TicketsService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsersService</servlet-name>
+        <servlet-class>com.airlinejk.services.UsersService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CitiesService</servlet-name>
         <url-pattern>/cities/all</url-pattern>
@@ -79,6 +99,49 @@
         <url-pattern>/routes/get/origin_destination</url-pattern>
         <url-pattern>/routes/get/origin_destination_like</url-pattern>
         <url-pattern>/routes/get</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayTypesService</servlet-name>
+        <url-pattern>/paytypes/get</url-pattern>
+        <url-pattern>/paytypes/all</url-pattern>
+        <url-pattern>/paytypes/update</url-pattern>
+        <url-pattern>/paytypes/delete</url-pattern>
+        <url-pattern>/paytypes/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReservationsService</servlet-name>
+        <url-pattern>/reservations/get</url-pattern>
+        <url-pattern>/reservations/get/user</url-pattern>
+        <url-pattern>/reservations/get/flight</url-pattern>
+        <url-pattern>/reservations/add</url-pattern>
+        <url-pattern>/reservations/update</url-pattern>
+        <url-pattern>/reservations/delete</url-pattern>
+        <url-pattern>/reservations/all</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SchedulesService</servlet-name>
+        <url-pattern>/schedules/get</url-pattern>
+        <url-pattern>/schedules/all</url-pattern>
+        <url-pattern>/schedules/delete</url-pattern>
+        <url-pattern>/schedules/update</url-pattern>
+        <url-pattern>/schedules/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TicketsService</servlet-name>
+        <url-pattern>/tickets/get</url-pattern>
+        <url-pattern>/tickets/all</url-pattern>
+        <url-pattern>/tickets/add</url-pattern>
+        <url-pattern>/tickets/delete</url-pattern>
+        <url-pattern>/tickets/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersService</servlet-name>
+        <url-pattern>/users/add</url-pattern>
+        <url-pattern>/users/update/info</url-pattern>
+        <url-pattern>/users/update/pass</url-pattern>
+        <url-pattern>/users/delete</url-pattern>
+        <url-pattern>/users/all</url-pattern>
+        <url-pattern>/users/get</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
