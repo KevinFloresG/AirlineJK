@@ -3,6 +3,8 @@ package com.airlinejk.daos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,8 +31,9 @@ public class ConnDB {
         String user = "system";
         String pass = "root";
         try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
             return DriverManager.getConnection(url, user, pass);
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             System.out.println("Unable to connect database");
         }
         return null;

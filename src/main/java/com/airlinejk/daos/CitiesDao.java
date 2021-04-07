@@ -105,4 +105,12 @@ public class CitiesDao {
         return city;
     }
     
+    public static void main(String[] args){
+        CitiesDao d = new CitiesDao();
+        List<Cities> all = d.all();
+        for(Cities c : all){
+            System.out.println(c.getName());
+        }
+    }
+    
 }
