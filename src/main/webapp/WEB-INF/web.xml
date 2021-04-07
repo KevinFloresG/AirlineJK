@@ -16,6 +16,14 @@
         <servlet-name>PlaneTypesService</servlet-name>
         <servlet-class>com.airlinejk.services.PlaneTypesService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FlightsService</servlet-name>
+        <servlet-class>com.airlinejk.services.FlightsService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RoutesService</servlet-name>
+        <servlet-class>com.airlinejk.services.RoutesService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CitiesService</servlet-name>
         <url-pattern>/cities/all</url-pattern>
@@ -47,6 +55,30 @@
         <url-pattern>/planetypes/update</url-pattern>
         <url-pattern>/planetypes/add</url-pattern>
         <url-pattern>/planetypes/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FlightsService</servlet-name>
+        <url-pattern>/flights/add</url-pattern>
+        <url-pattern>/flights/update/info</url-pattern>
+        <url-pattern>/flights/update/seats</url-pattern>
+        <url-pattern>/flights/delete</url-pattern>
+        <url-pattern>/flights/all</url-pattern>
+        <url-pattern>/flights/all/discount</url-pattern>
+        <url-pattern>/flights/get/route</url-pattern>
+        <url-pattern>/flights/get/routediscount</url-pattern>
+        <url-pattern>/flights/get</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoutesService</servlet-name>
+        <url-pattern>/routes/add</url-pattern>
+        <url-pattern>/routes/update</url-pattern>
+        <url-pattern>/routes/delete</url-pattern>
+        <url-pattern>/routes/all</url-pattern>
+        <url-pattern>/routes/get/origin</url-pattern>
+        <url-pattern>/routes/get/destination</url-pattern>
+        <url-pattern>/routes/get/origin_destination</url-pattern>
+        <url-pattern>/routes/get/origin_destination_like</url-pattern>
+        <url-pattern>/routes/get</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
