@@ -1,7 +1,7 @@
 package com.airlinejk.services;
 
-import com.airlinejk.business_logic.Countries;
-import com.airlinejk.daos.CountriesDao;
+import com.airlinejk.business_logic.Airplanes;
+import com.airlinejk.daos.AirplanesDao;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kevin Flores
  */
-public class CountriesService extends HttpServlet {
-    
-    private final CountriesDao dao = new CountriesDao();
+public class AirplanesService extends HttpServlet {
+
+    private final AirplanesDao dao = new AirplanesDao();
     private final Gson gson = new Gson();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -28,32 +28,32 @@ public class CountriesService extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         
         switch(request.getServletPath()){
-            case "/countries/get" : get(request, response); break;
-            case "/countries/add" : insert(request, response); break;
-            case "/countries/update" : update(request, response); break;
-            case "/countries/all" : getAll(response); break;
-            case "/countries/delete" : delete(request, response); break;
+            case "/airplanes/get" : get(request, response); break;
+            case "/airplanes/add" : insert(request, response); break;
+            case "/airplanes/update" : update(request, response); break;
+            case "/airplanes/all" : getAll(response); break;
+            case "/airplanes/delete" : delete(request, response); break;
         }   
     }
     
     private void insert(HttpServletRequest request, HttpServletResponse response) throws IOException{
         BufferedReader reader = request.getReader();
-        Countries country = gson.fromJson(reader, Countries.class);
-        dao.insert(country);
+        Airplanes airplane = gson.fromJson(reader, Airplanes.class);
+        dao.insert(airplane);
         response.setStatus(HttpServletResponse.SC_OK);
     }
     
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException{
         BufferedReader reader = request.getReader();
-        Countries country = gson.fromJson(reader, Countries.class);
-        dao.update(country);
+        Airplanes airplane = gson.fromJson(reader, Airplanes.class);
+        dao.update(airplane);
         response.setStatus(HttpServletResponse.SC_OK);
     }
     
     private void get(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String id = request.getParameter("id");
-        Countries country = dao.get(id);
-        String allJson = gson.toJson(country);
+        Airplanes airplane = dao.get(id);
+        String allJson = gson.toJson(airplane);
         PrintWriter out = response.getWriter();
         out.print(allJson);
         out.flush();
@@ -66,7 +66,7 @@ public class CountriesService extends HttpServlet {
     }
 
     private void getAll(HttpServletResponse response) throws IOException{
-        List<Countries> all = dao.all();
+        List<Airplanes> all = dao.all();
         String allJson = gson.toJson(all);
         PrintWriter out = response.getWriter();
         out.print(allJson);

@@ -8,6 +8,10 @@
         <servlet-name>CountriesService</servlet-name>
         <servlet-class>com.airlinejk.services.CountriesService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AirplanesService</servlet-name>
+        <servlet-class>com.airlinejk.services.AirplanesService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CitiesService</servlet-name>
         <url-pattern>/cities/all</url-pattern>
@@ -23,6 +27,14 @@
         <url-pattern>/countries/all</url-pattern>
         <url-pattern>/countries/add</url-pattern>
         <url-pattern>/countries/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AirplanesService</servlet-name>
+        <url-pattern>/airplanes/get</url-pattern>
+        <url-pattern>/airplanes/all</url-pattern>
+        <url-pattern>/airplanes/update</url-pattern>
+        <url-pattern>/airplanes/add</url-pattern>
+        <url-pattern>/airplanes/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
