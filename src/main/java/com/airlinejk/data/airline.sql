@@ -43,20 +43,12 @@ create table airplanes (id varchar2(20) not null,
                     airplaneType_id varchar2(20) not null
                     ) tablespace system;
 					
--- DIA REALMENTE TAMPOCO ES TAN NECESARIO, DE HECHO SCHEDULES SE PUEDE MANEJAR DIRECTAMENTE EN FLIGHTS
+
 create table schedules (id number not null,
                     weekday varchar2(10) not null,
-					departureTime date not null
+					departureTime varchar2(5) not null
                     ) tablespace system;
 					
--- EN ORACLE NO EXISTE UN TIPO DE DATO QUE SEA SOLO HORAS Y MINUTOS. HAY QUE USAR DATE O SINO OTRO TIPO COMO STRING,INT,number. 
--- ARRIVAL TIME REALMENTE NO HACE FALTA EN LA BD, NUNCA SE SABRA DE ANTEMANO EN LA TABLA DE HORARIO Y ADEMAS SOLO IMPORTA MOSTRAR EL ESTIMADO TRAS EL CALCULO 
--- CON DURACION EN VUELO, NO ES RECOMENDABLE GUARDARLO PUESTO QUE UN HORARIO PUEDE ESTAR ASIGNADO A DIFERENTES RUTAS, CADA UNA CON DIFERENTE DURACION Y POR ENDE
--- AUNQUE TENGAN EL MISMO DEPARTURE TIME NO NECESARIAMENT TENDRAN EL MISMO ARRIVAL TIME.
-
--- SE QUITO ARRIVAL TIME Y SE DECIDIO CONFORMARSE CON DATE
-
-
 					
 create table countries (id varchar2(10) not null,
                     name varchar2(20) not null
@@ -76,10 +68,7 @@ create table routes (id varchar2(20) not null,
 					destination varchar2(10) not null,
 					airplane_id varchar2(20) not null,
 					schedule number not null
-                    ) tablespace system;	
-
--- DURATION SE QUEDA COMO number, DESPUÉS HAY QUE VER COMO SUMAR ESO A DEPARTURE TIME PARA EL CALCULO DE ARRIVAL TIME. SEPARAR DURACION EN HORAS Y MINUTOS
--- PASAN A SER INTS.					
+                    ) tablespace system;					
 
 
 create table flights (id number not null,
@@ -94,6 +83,7 @@ create table flights (id number not null,
 					
 create table reservations (id number not null,
                     flightInfo varchar2(25) not null,
+					flightId number not null,
 					userID varchar2(20) not null,
 					totalPrice number not null,
 					airplane_id varchar2(20) not null,
@@ -203,7 +193,7 @@ end ins_airplane;
 /
 show error
 
-create or replace procedure ins_schedule(PWDay in varchar2, PDTime in date) is
+create or replace procedure ins_schedule(PWDay in varchar2, PDTime in varchar2) is
 begin
     insert into schedules(id, weekday, departureTime) 
 	values(seq_id_schedules.nextval,PWDay,PDTime);
@@ -257,11 +247,11 @@ end ins_flight;
 /
 show error
 
-create or replace procedure ins_reservation(PFlight in varchar2, PUser in varchar2, PPrice in number, PAId in varchar2, 
+create or replace procedure ins_reservation(PFlight in varchar2,PFID in number, PUser in varchar2, PPrice in number, PAId in varchar2, 
 PPType in varchar2, PSeatQ in number) is
 begin
-    insert into reservations(id, flightInfo, userID, totalPrice, airplane_id, typeOfPayment, seatQuantity, checkedInQuantity) 
-	values(seq_id_reservations.nextval,PFlight, PUser, PPrice, PAId, PPType, PSeatQ,0);
+    insert into reservations(id, flightInfo, flightId, userID, totalPrice, airplane_id, typeOfPayment, seatQuantity, checkedInQuantity) 
+	values(seq_id_reservations.nextval,PFlight, PFID, PUser, PPrice, PAId, PPType, PSeatQ,0);
     commit;
 end ins_reservation;
 /
@@ -319,7 +309,7 @@ end upd_airplane;
 show error
 
 
-create or replace procedure upd_schedule(PId in number, PWDay in varchar2, PDTime in date) is
+create or replace procedure upd_schedule(PId in number, PWDay in varchar2, PDTime in varchar2) is
 begin
     update schedules set weekday = PWDay, departureTime = PDTime where id = PId;
     commit;
@@ -395,9 +385,6 @@ end upd_ticket;
 /
 show error
 
-
-
-	
 
 -- DELETES
 create or replace procedure del_user(PUName in varchar2) is
@@ -520,10 +507,10 @@ insert into airplaneTypes values ('B748','748','Boeing',48,8,6);
 insert into airplanes values ('Z8C91',2014,'B777');
 insert into airplanes values ('W8R62',2017,'B748');
 
--- En estos inserts de schedules date lo usamos solo para la hora.
-insert into schedules values (seq_id_schedules.nextval,'Jueves',TO_DATE('23/12/2019 13:00:00', 'DD/MM/YYYY HH24:MI:SS'));
-insert into schedules values (seq_id_schedules.nextval,'Viernes',TO_DATE('23/12/2019 10:00:00', 'DD/MM/YYYY HH24:MI:SS'));
-insert into schedules values (seq_id_schedules.nextval,'Domingo',TO_DATE('23/12/2019 06:00:00', 'DD/MM/YYYY HH24:MI:SS'));
+
+insert into schedules values (seq_id_schedules.nextval,'Jueves','10:00');
+insert into schedules values (seq_id_schedules.nextval,'Viernes','13:00');
+insert into schedules values (seq_id_schedules.nextval,'Domingo','06:00');
 
 
 insert into paymentTypes values ('BTC','Bitcoin');

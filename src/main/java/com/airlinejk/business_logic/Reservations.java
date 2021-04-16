@@ -2,25 +2,28 @@ package com.airlinejk.business_logic;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class Reservations {
     
-    private Integer id, seatQuantity, checkedInQuantity;
+    private Integer id, seatQuantity, checkedInQuantity, flightId;
     private String flightInfo;
     private Userss user;
     private double totalPrice;
     private Airplanes airplane;
     private Paymenttypes typeOfPayment;
+    
+    
 
     public Reservations() {
     }
 
-    public Reservations(Integer id, Integer seatQuantity, Integer checkedInQuantity, String flightInfo, Userss user, double totalPrice, Airplanes airplane, Paymenttypes typeOfPayment) {
+    public Reservations(Integer id, Integer seatQuantity, Integer checkedInQuantity, String flightInfo, Integer FlightId, Userss user, double totalPrice, Airplanes airplane, Paymenttypes typeOfPayment) {
         this.id = id;
         this.seatQuantity = seatQuantity;
         this.checkedInQuantity = checkedInQuantity;
         this.flightInfo = flightInfo;
+        this.flightId = flightId;
         this.user = user;
         this.totalPrice = totalPrice;
         this.airplane = airplane;
@@ -57,6 +60,14 @@ public class Reservations {
 
     public void setFlightInfo(String flight) {
         this.flightInfo = flight;
+    }
+    
+    public Integer getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(Integer flightId) {
+        this.flightId = flightId;
     }
 
     public Userss getUser() {

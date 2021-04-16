@@ -21,6 +21,7 @@ public class SchedulesDao {
     private static final String DELETE = "{call del_schedule(?)}";
     private static final String ALL = "select * from schedules";
     private static final String GET = "select * from schedules where id = ?";
+    private static final String GET_ALL_DAY = "select * from schedules where weekday= ?";
     
     public SchedulesDao(){
         conn = ConnDB.getInstance();
@@ -31,7 +32,7 @@ public class SchedulesDao {
             CallableStatement cs;
             cs = conn.getConn().prepareCall(INSERT);
             cs.setString(1, schedule.getWeekday());
-            cs.setDate(2, schedule.getDepartureTime());
+            cs.setString(2, schedule.getDepartureTime());
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
@@ -45,7 +46,7 @@ public class SchedulesDao {
             cs = conn.getConn().prepareCall(UPDATE);
             cs.setInt(1, schedule.getId());
             cs.setString(2, schedule.getWeekday());
-            cs.setDate(3, schedule.getDepartureTime());
+            cs.setString(3, schedule.getDepartureTime());
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
@@ -94,11 +95,26 @@ public class SchedulesDao {
         return result;
     }
     
+    public Schedules getAllByDay(String weekday){
+        Schedules result = new Schedules();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(GET_ALL_DAY);
+            ps.setString(1, weekday);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result = constructSchedules(rs);
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to get schedule.");
+        }
+        return result;
+    }
+    
     private Schedules constructSchedules(ResultSet rs) throws SQLException{
         Schedules schedule = new Schedules();
         schedule.setId(rs.getInt("id"));
         schedule.setWeekday(rs.getString("weekday"));
-        schedule.setDepartureTime(rs.getDate("departureTime"));
+        schedule.setDepartureTime(rs.getString("departureTime"));
         return schedule;
     }
 }

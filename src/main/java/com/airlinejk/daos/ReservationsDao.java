@@ -20,7 +20,7 @@ public class ReservationsDao {
     private PaymentTypesDao payTypeDao;
 
     
-    private static final String INSERT = "{call ins_reservation(?,?,?,?,?,?)}";
+    private static final String INSERT = "{call ins_reservation(?,?,?,?,?,?,?)}";
     private static final String UPDATE = "{call upd_resCSeats(?,?)}";
     private static final String DELETE = "{call del_reservation(?)}";
     private static final String ALL = "select * from reservations";
@@ -40,11 +40,12 @@ public class ReservationsDao {
             CallableStatement cs;
             cs = conn.getConn().prepareCall(INSERT);
             cs.setString(1, reservation.getFlightInfo());
-            cs.setString(2, reservation.getUser().getUsername());
-            cs.setDouble(3, reservation.getTotalPrice());
-            cs.setString(4, reservation.getAirplane().getId());
-            cs.setString(5, reservation.getTypeOfPayment().getCode());
-            cs.setInt(6, reservation.getSeatQuantity());
+            cs.setInt(2, reservation.getFlightId());
+            cs.setString(3, reservation.getUser().getUsername());
+            cs.setDouble(4, reservation.getTotalPrice());
+            cs.setString(5, reservation.getAirplane().getId());
+            cs.setString(6, reservation.getTypeOfPayment().getCode());
+            cs.setInt(7, reservation.getSeatQuantity());
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
@@ -140,6 +141,7 @@ public class ReservationsDao {
         Reservations reservation = new Reservations();
         reservation.setId(rs.getInt("id"));
         reservation.setFlightInfo(rs.getString("flightInfo"));
+        reservation.setFlightId(rs.getInt("flightId"));
         reservation.setUser(userDao.get(rs.getString("userID")));
         reservation.setTotalPrice(rs.getDouble("totalPrice"));
         reservation.setAirplane(airplaneDao.get(rs.getString("airplane_id")));

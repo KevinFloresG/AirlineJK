@@ -1,24 +1,24 @@
 package com.airlinejk.business_logic;
 
-import java.sql.Date;
+
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class Schedules {
     
     private Integer id;
     private String weekday;
-    private Date departureTime;
+    private String departureTime;
 
     public Schedules() {
         this.id = 0;
         this.weekday = "";
-        this.departureTime = null;
+        this.departureTime = "";
     }
 
-    public Schedules(Integer id, String weekday, Date departureTime) {
+    public Schedules(Integer id, String weekday, String departureTime) {
         this.id = id;
         this.weekday = weekday;
         this.departureTime = departureTime;
@@ -40,11 +40,11 @@ public class Schedules {
         this.weekday = weekday;
     }
 
-    public Date getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Date departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
     
