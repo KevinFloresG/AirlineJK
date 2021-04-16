@@ -20,7 +20,7 @@ public class PaymentTypesDao {
     private static final String UPDATE = "{call upd_payType(?,?)}";
     private static final String DELETE = "{call del_payType(?)}";
     private static final String ALL = "select * from paymentTypes";
-    private static final String GET = "select * from paymentTypes where id = ?";
+    private static final String GET = "select * from paymentTypes where code = ?";
     
     public PaymentTypesDao(){
         conn = ConnDB.getInstance();
