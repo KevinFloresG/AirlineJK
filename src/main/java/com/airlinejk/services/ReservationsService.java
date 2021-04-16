@@ -63,7 +63,7 @@ public class ReservationsService extends HttpServlet {
     }
     
     private void getByUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String id = request.getParameter("id");
+        String id = request.getParameter("username");
         List<Reservations> rsvt = dao.allUserRes(id);
         String allJson = gson.toJson(rsvt);
         PrintWriter out = response.getWriter();
