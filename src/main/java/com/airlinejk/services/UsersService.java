@@ -29,12 +29,25 @@ public class UsersService extends HttpServlet {
         
         switch(request.getServletPath()){
             case "/users/get" : get(request, response); break;
+            case "/users/login" : login(request, response); break;
             case "/users/add" : insert(request, response); break;
             case "/users/update/info" : updateInfo(request, response); break;
             case "/users/update/pass" : updatePass(request, response); break;
             case "/users/all" : getAll(response); break;
             case "/users/delete" : delete(request, response); break;
         }   
+    }
+    
+    private void login(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        BufferedReader reader = request.getReader();
+        Userss user = gson.fromJson(reader, Userss.class);
+        Userss userReal = dao.get(user.getUsername());
+        PrintWriter out = response.getWriter();
+        if(user.getPassword().equals(userReal.getPassword())){
+            out.print(true);
+        }else{ out.print(false); }
+        out.flush();
+        response.setStatus(HttpServletResponse.SC_OK);
     }
     
     private void insert(HttpServletRequest request, HttpServletResponse response) throws IOException{
