@@ -522,5 +522,7 @@ insert into routes values ('CRC-USA',4,25,'SJ','NY','Z8C91',1);
 insert into routes values ('CRC-CHI',13,50,'SJ','PK','W8R62',2);
 
 insert into flights values (seq_id_flights.nextval,'CRC-USA',TO_DATE('23/05/2021', 'DD/MM/YYYY'),null,300000,0.0,36);
+
+insert into reservations values (seq_id_reservations.nextval, 'Reservation Info', 123, '123', 123, 'Z8C91', 'CRC', 30,0);
 							
 commit;
