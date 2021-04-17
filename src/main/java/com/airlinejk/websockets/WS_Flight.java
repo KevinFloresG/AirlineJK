@@ -33,11 +33,11 @@ public class WS_Flight {
     private final String JSON = "{\"type\":\"%s\", \"content\":%s}";
     
     @OnOpen
-    public void onOpen(Session session) throws IOException, EncodeException {
+    public void onOpen(Session s) throws IOException, EncodeException {
         List<Flights> l = dao.all();
         String json = gson.toJson(l, new TypeToken<List<Flights>>(){}.getType());
         String finalJson = String.format(JSON, "all", json);
-        session.getBasicRemote().sendText(finalJson);
+        s.getBasicRemote().sendText(finalJson);
         /*
         *   You can send an object, but in this case is not necessary,
         *   because you can use JSON.parse() at JS to get a JS object
@@ -48,27 +48,29 @@ public class WS_Flight {
     }
     
     @OnMessage
-    public void onMessage(Session session, JsonObject user) 
+    public void onMessage(Session s, JsonObject request) 
             throws IOException, EncodeException {
-        
-        /*List<Userss> list = usersDao.all();*/
-        System.out.println(user.toString());
-        for (Session sess : session.getOpenSessions()) {
-            if (sess.isOpen())
-               sess.getBasicRemote().sendObject(user);
+        switch(request.getString("type")){
+            case "delete":
+                deleteFlight(s, request.getString("content"));
+                break;
         }
     }
     
-    @OnClose
-    public void onClose(Session session) throws IOException, EncodeException {
-        /*List<Userss> list = usersDao.all();*/
-        for (Session sess : session.getOpenSessions()) {
-            if (sess.isOpen())
-               sess.getBasicRemote().sendText("disconnected: "+session.getId());
-        }
-        if(session.isOpen())
-            session.close();
+    private void deleteFlight(Session s, String flight) throws IOException{
+        Flights f = gson.fromJson(flight, Flights.class);
+        dao.delete(f.getId());
+        broadcast(s, "delete",flight);
     }
+    
+    private void broadcast(Session s, String type, String content) throws IOException{
+        //s.getBasicRemote().sendText(String.format(JSON, type, content));
+        for(Session sess : s.getOpenSessions()){
+            if(sess.isOpen())
+                sess.getBasicRemote().sendText(String.format(JSON, type, content));
+        }
+    }
+
     
     public JsonObject listAsJsonObj(List<Flights> l){
         String json = gson.toJson(l, new TypeToken<List<Flights>>(){}.getType());
