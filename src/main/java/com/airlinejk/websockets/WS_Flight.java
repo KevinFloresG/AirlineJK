@@ -30,12 +30,14 @@ public class WS_Flight {
 
     private final FlightsDao dao = new FlightsDao();
     private final Gson gson = new Gson();
+    private final String JSON = "{\"type\":\"%s\", \"content\":%s}";
     
     @OnOpen
     public void onOpen(Session session) throws IOException, EncodeException {
         List<Flights> l = dao.all();
         String json = gson.toJson(l, new TypeToken<List<Flights>>(){}.getType());
-        session.getBasicRemote().sendText(json);
+        String finalJson = String.format(JSON, "all", json);
+        session.getBasicRemote().sendText(finalJson);
         /*
         *   You can send an object, but in this case is not necessary,
         *   because you can use JSON.parse() at JS to get a JS object
