@@ -23,7 +23,7 @@ public class Reservations {
         this.seatQuantity = seatQuantity;
         this.checkedInQuantity = checkedInQuantity;
         this.flightInfo = flightInfo;
-        this.flightId = flightId;
+        this.flightId = FlightId;
         this.user = user;
         this.totalPrice = totalPrice;
         this.airplane = airplane;
