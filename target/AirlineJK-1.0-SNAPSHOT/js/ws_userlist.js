@@ -1,9 +1,10 @@
 
 
-var ws = new WebSocket("ws://localhost:8088/AirlineJK/userList");
+var ws = new WebSocket("ws://localhost:8088/AirlineJK/flight");
 
 ws.onmessage = function(event) {
-    console.log(event.data);
+    let obj = JSON.parse(event.data)
+    console.log(obj)
 };
 
 function send() {
