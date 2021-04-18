@@ -22,6 +22,7 @@ public class SchedulesDao {
     private static final String ALL = "select * from schedules";
     private static final String GET = "select * from schedules where id = ?";
     private static final String GET_ALL_DAY = "select * from schedules where weekday= ?";
+    private static final String LAST = "select * from schedules where id = ( select max(id) from schedules )";
     
     public SchedulesDao(){
         conn = ConnDB.getInstance();
@@ -106,6 +107,20 @@ public class SchedulesDao {
             }
         }catch(SQLException ex){
             System.out.println("Error: It was imposible to get schedule.");
+        }
+        return result;
+    }
+    
+    public Schedules getLastAdded(){
+        Schedules result = new Schedules();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(LAST);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result = constructSchedules(rs);
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to get flight.");
         }
         return result;
     }

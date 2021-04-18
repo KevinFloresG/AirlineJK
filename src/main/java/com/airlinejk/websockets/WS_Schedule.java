@@ -1,7 +1,7 @@
 package com.airlinejk.websockets;
 
-import com.airlinejk.business_logic.Countries;
-import com.airlinejk.daos.CountriesDao;
+import com.airlinejk.business_logic.Schedules;
+import com.airlinejk.daos.SchedulesDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
@@ -19,23 +19,23 @@ import javax.websocket.server.ServerEndpoint;
 
 /**
  *
- * @author Kevin Flores, Javier Amador
+ * @author Kevin Flores, Javier Amador 
  */
 @ServerEndpoint(
-    value = "/country",
+    value = "/schedule",
     decoders = {Decodifier.class},
     encoders = {Encodifier.class}
 )
-public class WS_Country {
+public class WS_Schedule {
 
-    private final CountriesDao dao = new CountriesDao();
+    private final SchedulesDao dao = new SchedulesDao();
     private final Gson gson = new Gson();
     private final String JSON = "{\"type\":\"%s\", \"content\":%s}";
     
     @OnOpen
     public void onOpen(Session s) throws IOException, EncodeException {
-        List<Countries> l = dao.all();
-        String json = gson.toJson(l, new TypeToken<List<Countries>>(){}.getType());
+        List<Schedules> l = dao.all();
+        String json = gson.toJson(l, new TypeToken<List<Schedules>>(){}.getType());
         String finalJson = String.format(JSON, "all", json);
         s.getBasicRemote().sendText(finalJson);
         /*
@@ -52,34 +52,35 @@ public class WS_Country {
             throws IOException, EncodeException {
         switch(request.getString("type")){
             case "delete":
-                deleteCountry(s, request.getString("content"));
+                deleteSchedule(s, request.getString("content"));
                 break;
             case "add":
-                addCountry(s, request.getString("content"));
+                addSchedule(s, request.getString("content"));
                 break;
             case "update":
-                updateCountry(s, request.getString("content"));
+                updateSchedule(s, request.getString("content"));
                 break;
         }
     }
     
-    private void updateCountry(Session s, String country) throws IOException{
-        Countries f = gson.fromJson(country, Countries.class);
+    private void updateSchedule(Session s, String country) throws IOException{
+        Schedules f = gson.fromJson(country, Schedules.class);
         dao.update(f);
         f = dao.get(f.getId());
-        broadcast(s, "update", gson.toJson(f, Countries.class));
+        broadcast(s, "update", gson.toJson(f, Schedules.class));
     }
     
-    private void deleteCountry(Session s, String country) throws IOException{
-        Countries f = gson.fromJson(country, Countries.class);
+    private void deleteSchedule(Session s, String country) throws IOException{
+        Schedules f = gson.fromJson(country, Schedules.class);
         dao.delete(f.getId());
         broadcast(s, "delete",country);
     }
     
-    private void addCountry(Session s, String flight) throws IOException{
-        Countries f = gson.fromJson(flight, Countries.class);
+    private void addSchedule(Session s, String flight) throws IOException{
+        Schedules f = gson.fromJson(flight, Schedules.class);
         dao.insert(f);
-        broadcast(s, "add", gson.toJson(f, Countries.class));
+        f = dao.getLastAdded();
+        broadcast(s, "add", gson.toJson(f, Schedules.class));
     }
     
     private void broadcast(Session s, String type, String content) throws IOException{
@@ -90,8 +91,8 @@ public class WS_Country {
         }
     }
 
-    public JsonObject listAsJsonObj(List<Countries> l){
-        String json = gson.toJson(l, new TypeToken<List<Countries>>(){}.getType());
+    public JsonObject listAsJsonObj(List<Schedules> l){
+        String json = gson.toJson(l, new TypeToken<List<Schedules>>(){}.getType());
         String j2 = "{ \"content\" : "+json+"}";
         System.out.println(j2);
         JsonReader jsonReader = Json.createReader(new StringReader(j2));
