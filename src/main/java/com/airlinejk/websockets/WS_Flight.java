@@ -30,7 +30,7 @@ import javax.websocket.server.ServerEndpoint;
 public class WS_Flight {
 
     private final FlightsDao dao = new FlightsDao();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
     private final String JSON = "{\"type\":\"%s\", \"content\":%s}";
     
     @OnOpen
@@ -65,9 +65,7 @@ public class WS_Flight {
     }
     
     private void updateFlight(Session s, String flight) throws IOException{
-        System.out.println(flight);
-        Gson gson2 = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
-        Flights f = gson2.fromJson(flight, Flights.class);
+        Flights f = gson.fromJson(flight, Flights.class);
         dao.updateFlightInfo(f);
         f = dao.get(f.getId());
         broadcast(s, "update", gson.toJson(f, Flights.class));
@@ -80,8 +78,7 @@ public class WS_Flight {
     }
     
     private void addFlight(Session s, String flight) throws IOException{
-        Gson gson2 = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
-        Flights f = gson2.fromJson(flight, Flights.class);
+        Flights f = gson.fromJson(flight, Flights.class);
         dao.insert(f);
         f = dao.getLastAdded();
         broadcast(s, "add", gson.toJson(f, Flights.class));
@@ -95,7 +92,6 @@ public class WS_Flight {
         }
     }
 
-    
     public JsonObject listAsJsonObj(List<Flights> l){
         String json = gson.toJson(l, new TypeToken<List<Flights>>(){}.getType());
         String j2 = "{ \"content\" : "+json+"}";
