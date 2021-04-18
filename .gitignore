@@ -1,1 +1,6 @@
 /target/
+*.war
+*.class
+*.lst
+target/test-classes/.netbeans_automatic_build
+target/classes/.netbeans_automatic_build

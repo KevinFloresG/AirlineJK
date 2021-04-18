@@ -28,7 +28,7 @@ public class RoutesDao {
     private static final String SEARCH_BY_ORIGIN_DESTINATION = "select * from routes where origin = ? and destination = ?";
     private static final String SEARCH_BY_ORIGIN_DESTINATION_LIKE = "select * from (routes r inner join cities o on r.origin = o.id) inner join cities d on r.destination = d.id where o.name like ? and d.name like ?";
     private static final String GET = "select * from routes where id = ?";
-    private static final String GET_TOP_5 = "select * from (select f.route, count(*) as TotalR from flights f inner join reservations r on f.id = r.flightId group by f.route order by 1 desc ) where rownum <= 5;";
+    private static final String GET_TOP_5 = "select * from (select f.route, count(*) as TotalR from flights f inner join reservations r on f.id = r.flightId group by f.route order by 1 desc ) where rownum <= 5";
     
     public RoutesDao(){
         conn = ConnDB.getInstance();
@@ -105,7 +105,7 @@ public class RoutesDao {
             PreparedStatement ps = conn.getConn().prepareStatement(GET_TOP_5);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                result.add(constructRoutes(rs));
+                result.add(constructTop5Routes(rs));
             }
         }catch(SQLException ex){
             System.out.println("Error: It was imposible to list the top 5 Routes.");
@@ -151,7 +151,7 @@ public class RoutesDao {
             ps.setString(2, destination);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                result.add(constructTop5Routes(rs));
+                result.add(constructRoutesForLikeSearch(rs));
             }
         }catch(SQLException ex){
             System.out.println("Error: It was imposible to list routes with specified origin and destination.");
@@ -215,8 +215,8 @@ public class RoutesDao {
     }
     
     private Routes constructTop5Routes(ResultSet rs) throws SQLException{
-        Routes route = this.get(rs.getString("f.route"));
-        route.setDurationminutes(rs.getInt("TotalR"));
+        Routes route = this.get(rs.getString(1));
+        route.setDurationminutes(rs.getInt(2));
 
         return route;
     }

@@ -99,6 +99,7 @@
         <url-pattern>/routes/get/origin_destination</url-pattern>
         <url-pattern>/routes/get/origin_destination_like</url-pattern>
         <url-pattern>/routes/get</url-pattern>
+        <url-pattern>/routes/getTop</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PayTypesService</servlet-name>
