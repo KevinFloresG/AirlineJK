@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Kevin Flores
+ * @author Kevin Flores, Javier Amador
  */
 public class RoutesService extends HttpServlet {
 
@@ -36,6 +36,7 @@ public class RoutesService extends HttpServlet {
             case "/routes/add" : insert(request, response); break;
             case "/routes/update" : update(request, response); break;
             case "/routes/all" : getAll(response); break;
+            case "/routes/getTop" : getTop(response); break;
             case "/routes/delete" : delete(request, response); break;
         }   
     }
@@ -112,6 +113,14 @@ public class RoutesService extends HttpServlet {
         String allJson = gson.toJson(all);
         PrintWriter out = response.getWriter();
         out.print(allJson);
+        out.flush();
+    }
+    
+    private void getTop(HttpServletResponse response) throws IOException{
+        List<Routes> top = dao.getTop5Routes();
+        String topJson = gson.toJson(top);
+        PrintWriter out = response.getWriter();
+        out.print(topJson);
         out.flush();
     }
     
