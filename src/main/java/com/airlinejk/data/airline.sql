@@ -580,7 +580,9 @@ insert into reservations values (seq_id_reservations.nextval, 'CR-USA - 23/05/20
 insert into reservations values (seq_id_reservations.nextval, 'CR-CHI - 27/05/2021 08:00', 2, '321', 500000, 'W8R62', 'CR', 1,0);
 insert into reservations values (seq_id_reservations.nextval, 'CAN-USA - 01/06/2021 17:00', 4, 'basicUser2', 150000, 'ABC23', 'DOL', 1,0);
 
+insert into tickets values(seq_id_tickets.nextval,1, 1, 0, 5);
+insert into tickets values(seq_id_tickets.nextval,1, 1, 1, 5);
+insert into tickets values(seq_id_tickets.nextval,1, 1, 2, 5);
+insert into tickets values(seq_id_tickets.nextval,1, 1, 3, 5);
 
-
-							
 commit;
