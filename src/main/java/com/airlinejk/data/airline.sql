@@ -565,14 +565,14 @@ insert into routes values ('UK-ESP',1,40,'LD','MAD','XYZ48',5);
 insert into routes values ('CHI-MEX',14,20,'PK','CDMX','M3R35',6);
 
 
-insert into flights values (seq_id_flights.nextval,'CR-USA',TO_DATE('23/05/2021', 'DD/MM/YYYY'),null,300000,0,36);
-insert into flights values (seq_id_flights.nextval,'CR-CHI',TO_DATE('27/05/2021', 'DD/MM/YYYY'),null,500000,10,48);
-insert into flights values (seq_id_flights.nextval,'CR-USA',TO_DATE('28/05/2021', 'DD/MM/YYYY'),TO_DATE('29/05/2021', 'DD/MM/YYYY'),600000,0,36);
-insert into flights values (seq_id_flights.nextval,'CAN-USA',TO_DATE('01/06/2021', 'DD/MM/YYYY'),null,150000,0,90);
-insert into flights values (seq_id_flights.nextval,'CHI-MEX',TO_DATE('05/06/2021', 'DD/MM/YYYY'),TO_DATE('01/07/2021', 'DD/MM/YYYY'),1000000,0,60);
-insert into flights values (seq_id_flights.nextval,'UK-ESP',TO_DATE('27/06/2021', 'DD/MM/YYYY'),null,251400,20,72);
-insert into flights values (seq_id_flights.nextval,'USA-ITA',TO_DATE('28/06/2021', 'DD/MM/YYYY'),null,851800,0,99);
-insert into flights values (seq_id_flights.nextval,'CR-USA',TO_DATE('29/06/2021', 'DD/MM/YYYY'),null,300000,50,36);
+insert into flights values (seq_id_flights.nextval,'CR-USA',TO_DATE('23/05/2021', 'DD/MM/YYYY'),null,300000,0.0,36);
+insert into flights values (seq_id_flights.nextval,'CR-CHI',TO_DATE('27/05/2021', 'DD/MM/YYYY'),null,500000,0.10,48);
+insert into flights values (seq_id_flights.nextval,'CR-USA',TO_DATE('28/05/2021', 'DD/MM/YYYY'),TO_DATE('29/05/2021', 'DD/MM/YYYY'),600000,0.0,36);
+insert into flights values (seq_id_flights.nextval,'CAN-USA',TO_DATE('01/06/2021', 'DD/MM/YYYY'),null,150000,0.0,90);
+insert into flights values (seq_id_flights.nextval,'CHI-MEX',TO_DATE('05/06/2021', 'DD/MM/YYYY'),TO_DATE('01/07/2021', 'DD/MM/YYYY'),1000000,0.0,60);
+insert into flights values (seq_id_flights.nextval,'UK-ESP',TO_DATE('27/06/2021', 'DD/MM/YYYY'),null,251400,0.20,72);
+insert into flights values (seq_id_flights.nextval,'USA-ITA',TO_DATE('28/06/2021', 'DD/MM/YYYY'),null,851800,0.0,99);
+insert into flights values (seq_id_flights.nextval,'CR-USA',TO_DATE('29/06/2021', 'DD/MM/YYYY'),null,300000,0.50,36);
 
 insert into reservations values (seq_id_reservations.nextval, 'CR-USA - 23/05/2021 14:00', 1, '321', 300000, 'Z8C91', 'CR', 1,0);
 insert into reservations values (seq_id_reservations.nextval, 'CR-USA - 23/05/2021 14:00', 1, 'basicUser1', 600000, 'Z8C91', 'BTC', 2,0);
