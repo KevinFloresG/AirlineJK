@@ -3,6 +3,7 @@ package com.airlinejk.websockets;
 import com.airlinejk.business_logic.Flights;
 import com.airlinejk.daos.FlightsDao;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.StringReader;
@@ -54,13 +55,36 @@ public class WS_Flight {
             case "delete":
                 deleteFlight(s, request.getString("content"));
                 break;
+            case "add":
+                addFlight(s, request.getString("content"));
+                break;
+            case "update":
+                updateFlight(s, request.getString("content"));
+                break;
         }
+    }
+    
+    private void updateFlight(Session s, String flight) throws IOException{
+        System.out.println(flight);
+        Gson gson2 = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
+        Flights f = gson2.fromJson(flight, Flights.class);
+        dao.updateFlightInfo(f);
+        f = dao.get(f.getId());
+        broadcast(s, "update", gson.toJson(f, Flights.class));
     }
     
     private void deleteFlight(Session s, String flight) throws IOException{
         Flights f = gson.fromJson(flight, Flights.class);
         dao.delete(f.getId());
         broadcast(s, "delete",flight);
+    }
+    
+    private void addFlight(Session s, String flight) throws IOException{
+        Gson gson2 = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
+        Flights f = gson2.fromJson(flight, Flights.class);
+        dao.insert(f);
+        f = dao.getLastAdded();
+        broadcast(s, "add", gson.toJson(f, Flights.class));
     }
     
     private void broadcast(Session s, String type, String content) throws IOException{

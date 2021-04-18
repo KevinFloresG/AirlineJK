@@ -26,6 +26,7 @@ public class FlightsDao {
     private static final String SEARCH_BY_ROUTE = "select * from flights where route = ?";
     private static final String SEARCH_BY_ROUTE_DISCOUNT = "select * from flights where route = ? and discount != 0";
     private static final String GET = "select * from flights where id = ?";
+    private static final String LAST = "select * from flights where id = ( select max(id) from flights )";
     
     public FlightsDao(){
         conn = ConnDB.getInstance();
@@ -146,6 +147,20 @@ public class FlightsDao {
             }
         }catch(SQLException ex){
             System.out.println("Error: It was imposible to list Flights with discount and specified route.");
+        }
+        return result;
+    }
+    
+    public Flights getLastAdded(){
+        Flights result = new Flights();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(LAST);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result = constructFlights(rs);
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to get flight.");
         }
         return result;
     }
