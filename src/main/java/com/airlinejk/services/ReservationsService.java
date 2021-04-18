@@ -26,8 +26,7 @@ public class ReservationsService extends HttpServlet {
         
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        /*<url-pattern>/reservations/all/user</url-pattern>
-        <url-pattern>/reservations/all/flight</url-pattern>*/
+
         switch(request.getServletPath()){
             case "/reservations/get" : get(request, response); break;
             case "/reservations/get/user" : getByUser(request, response); break;

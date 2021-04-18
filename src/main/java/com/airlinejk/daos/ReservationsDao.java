@@ -16,7 +16,6 @@ public class ReservationsDao {
     
     private ConnDB conn;
     private UsersDao userDao;
-    private AirplanesDao airplaneDao;
     private PaymentTypesDao payTypeDao;
 
     
@@ -31,7 +30,6 @@ public class ReservationsDao {
     public ReservationsDao(){
         conn = ConnDB.getInstance();
         userDao = new UsersDao();
-        airplaneDao = new AirplanesDao();
         payTypeDao = new PaymentTypesDao();
     }
     
@@ -43,7 +41,7 @@ public class ReservationsDao {
             cs.setInt(2, reservation.getFlightId());
             cs.setString(3, reservation.getUser().getUsername());
             cs.setDouble(4, reservation.getTotalPrice());
-            cs.setString(5, reservation.getAirplane().getId());
+            cs.setString(5, reservation.getAirplane());
             cs.setString(6, reservation.getTypeOfPayment().getCode());
             cs.setInt(7, reservation.getSeatQuantity());
             cs.executeUpdate();
@@ -144,7 +142,7 @@ public class ReservationsDao {
         reservation.setFlightId(rs.getInt("flightId"));
         reservation.setUser(userDao.get(rs.getString("userID")));
         reservation.setTotalPrice(rs.getDouble("totalPrice"));
-        reservation.setAirplane(airplaneDao.get(rs.getString("airplane_id")));
+        reservation.setAirplane(rs.getString("airplane_id"));
         reservation.setTypeOfPayment(payTypeDao.get(rs.getString("typeOfPayment")));
         reservation.setSeatQuantity(rs.getInt("seatQuantity"));
         reservation.setCheckedInQuantity(rs.getInt("checkedInQuantity"));

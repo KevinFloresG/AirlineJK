@@ -82,7 +82,7 @@ create table flights (id number not null,
 					
 					
 create table reservations (id number not null,
-                    flightInfo varchar2(40) not null,
+                    flightInfo varchar2(300) not null,
 					flightId number not null,
 					userID varchar2(20) not null,
 					totalPrice number not null,
@@ -574,10 +574,10 @@ insert into flights values (seq_id_flights.nextval,'UK-ESP',TO_DATE('27/06/2021'
 insert into flights values (seq_id_flights.nextval,'USA-ITA',TO_DATE('28/06/2021', 'DD/MM/YYYY'),null,851800,0,99);
 insert into flights values (seq_id_flights.nextval,'CR-USA',TO_DATE('29/06/2021', 'DD/MM/YYYY'),null,300000,50,36);
 
-insert into reservations values (seq_id_reservations.nextval, 'CR-USA - 23/05/2021 14:00', 1, '123', 300000, 'Z8C91', 'CR', 1,0);
+insert into reservations values (seq_id_reservations.nextval, 'CR-USA - 23/05/2021 14:00', 1, '321', 300000, 'Z8C91', 'CR', 1,0);
 insert into reservations values (seq_id_reservations.nextval, 'CR-USA - 23/05/2021 14:00', 1, 'basicUser1', 600000, 'Z8C91', 'BTC', 2,0);
 insert into reservations values (seq_id_reservations.nextval, 'CR-USA - 23/05/2021 14:00', 1, 'basicUser3', 900000, 'Z8C91', 'CR', 3,0);
-insert into reservations values (seq_id_reservations.nextval, 'CR-CHI - 27/05/2021 08:00', 2, '123', 500000, 'W8R62', 'CR', 1,0);
+insert into reservations values (seq_id_reservations.nextval, 'CR-CHI - 27/05/2021 08:00', 2, '321', 500000, 'W8R62', 'CR', 1,0);
 insert into reservations values (seq_id_reservations.nextval, 'CAN-USA - 01/06/2021 17:00', 4, 'basicUser2', 150000, 'ABC23', 'DOL', 1,0);
 
 

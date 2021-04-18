@@ -10,15 +10,13 @@ public class Reservations {
     private String flightInfo;
     private Userss user;
     private double totalPrice;
-    private Airplanes airplane;
+    private String airplane;
     private Paymenttypes typeOfPayment;
     
-    
-
     public Reservations() {
     }
 
-    public Reservations(Integer id, Integer seatQuantity, Integer checkedInQuantity, String flightInfo, Integer FlightId, Userss user, double totalPrice, Airplanes airplane, Paymenttypes typeOfPayment) {
+    public Reservations(Integer id, Integer seatQuantity, Integer checkedInQuantity, String flightInfo, Integer FlightId, Userss user, double totalPrice, String airplane, Paymenttypes typeOfPayment) {
         this.id = id;
         this.seatQuantity = seatQuantity;
         this.checkedInQuantity = checkedInQuantity;
@@ -86,11 +84,11 @@ public class Reservations {
         this.totalPrice = totalPrice;
     }
 
-    public Airplanes getAirplane() {
+    public String getAirplane() {
         return airplane;
     }
 
-    public void setAirplane(Airplanes airplane) {
+    public void setAirplane(String airplane) {
         this.airplane = airplane;
     }
 
