@@ -3,6 +3,7 @@ package com.airlinejk.services;
 import com.airlinejk.business_logic.Userss;
 import com.airlinejk.daos.UsersDao;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UsersService extends HttpServlet {
 
     private final UsersDao dao = new UsersDao();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
