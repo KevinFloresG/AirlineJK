@@ -29,6 +29,7 @@ public class TicketsService extends HttpServlet {
         
         switch(request.getServletPath()){
             case "/tickets/get" : get(request, response); break;
+            case "/tickets/get/flight" : getByFlight(request, response); break;
             case "/tickets/add" : insert(request, response); break;
             case "/tickets/update" : update(request, response); break;
             case "/tickets/all" : getAll(response); break;
@@ -53,6 +54,15 @@ public class TicketsService extends HttpServlet {
     private void get(HttpServletRequest request, HttpServletResponse response) throws IOException{
         Integer id = Integer.parseInt(request.getParameter("id"));
         Tickets ticket = dao.get(id);
+        String allJson = gson.toJson(ticket);
+        PrintWriter out = response.getWriter();
+        out.print(allJson);
+        out.flush();
+    }
+    
+    private void getByFlight(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        List<Tickets> ticket = dao.allFlightTickets(id);
         String allJson = gson.toJson(ticket);
         PrintWriter out = response.getWriter();
         out.print(allJson);

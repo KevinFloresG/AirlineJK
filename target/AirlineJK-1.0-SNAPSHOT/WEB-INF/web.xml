@@ -130,6 +130,7 @@
     <servlet-mapping>
         <servlet-name>TicketsService</servlet-name>
         <url-pattern>/tickets/get</url-pattern>
+        <url-pattern>/tickets/get/flight</url-pattern>
         <url-pattern>/tickets/all</url-pattern>
         <url-pattern>/tickets/add</url-pattern>
         <url-pattern>/tickets/delete</url-pattern>

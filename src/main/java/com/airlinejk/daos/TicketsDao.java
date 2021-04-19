@@ -1,5 +1,7 @@
 package com.airlinejk.daos;
 
+import com.airlinejk.business_logic.Flights;
+import com.airlinejk.business_logic.Reservations;
 import com.airlinejk.business_logic.Tickets;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -19,7 +21,7 @@ public class TicketsDao {
     private ReservationsDao reservationsDao;
 
     
-    private static final String INSERT = "{call ins_ticket(?,?,?,?,?)}";
+    private static final String INSERT = "{call ins_ticket(?,?,?,?)}";
     private static final String UPDATE = "{call upd_ticket(?,?,?,?)}";
     private static final String DELETE = "{call del_reservation(?)}";
     private static final String ALL = "select * from tickets";
@@ -28,7 +30,7 @@ public class TicketsDao {
     private static final String GET = "select * from tickets where id = ?";
     
     public TicketsDao(){
-        conn = ConnDB.getInstance();;
+        conn = ConnDB.getInstance();
         flightsDao = new FlightsDao();
         reservationsDao = new ReservationsDao();
     }
@@ -38,10 +40,9 @@ public class TicketsDao {
             CallableStatement cs;
             cs = conn.getConn().prepareCall(INSERT);
             cs.setInt(1, ticket.getReservation().getId());
-            cs.setString(2, ticket.getOwner());
-            cs.setInt(3, ticket.getFlight().getId());
-            cs.setInt(4, ticket.getRowN());
-            cs.setInt(5, ticket.getColumnN());
+            cs.setInt(2, ticket.getFlight().getId());
+            cs.setInt(3, ticket.getRowN());
+            cs.setInt(4, ticket.getColumnN());
             cs.executeUpdate();
             cs.close();
         } catch (SQLException ex) {
@@ -141,10 +142,16 @@ public class TicketsDao {
     
     private Tickets constructTickets(ResultSet rs) throws SQLException{
         Tickets ticket = new Tickets();
+        Reservations r = new Reservations();
+        Flights f = new Flights();
         ticket.setId(rs.getInt("id"));
-        ticket.setOwner(rs.getString("owner"));
-        ticket.setReservation(reservationsDao.get(rs.getInt("reservation")));
-        ticket.setFlight(flightsDao.get(rs.getInt("flight")));
+        //ticket.setOwner(rs.getString("owner"));
+        //ticket.setReservation(reservationsDao.get(rs.getInt("reservation")));
+        //ticket.setFlight(flightsDao.get(rs.getInt("flight")));
+        f.setId(rs.getInt("flight"));
+        r.setId(rs.getInt("reservation"));
+        ticket.setFlight(f);
+        ticket.setReservation(r);
         ticket.setRowN(rs.getInt("rowN"));
         ticket.setColumnN(rs.getInt("columnN"));
 

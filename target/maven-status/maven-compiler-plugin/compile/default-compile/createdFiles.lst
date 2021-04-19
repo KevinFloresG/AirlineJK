@@ -2,6 +2,7 @@ com\airlinejk\services\SchedulesService.class
 com\airlinejk\websockets\WS_Flight$1.class
 com\airlinejk\daos\CitiesDao.class
 com\airlinejk\business_logic\Schedules.class
+com\airlinejk\websockets\WS_Ticket$1.class
 com\airlinejk\daos\SchedulesDao.class
 com\airlinejk\business_logic\Reservations.class
 com\airlinejk\daos\PaymentTypesDao.class
@@ -12,6 +13,7 @@ com\airlinejk\services\PayTypesService.class
 com\airlinejk\websockets\WS_Country.class
 com\airlinejk\daos\UsersDao.class
 com\airlinejk\business_logic\Paymenttypes.class
+com\airlinejk\websockets\WS_Ticket.class
 com\airlinejk\websockets\WS_Flight$2.class
 com\airlinejk\business_logic\Routes.class
 com\airlinejk\services\CitiesService.class
