@@ -135,6 +135,7 @@
         <url-pattern>/tickets/add</url-pattern>
         <url-pattern>/tickets/delete</url-pattern>
         <url-pattern>/tickets/update</url-pattern>
+        <url-pattern>/tickets/get/reservation</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UsersService</servlet-name>
