@@ -145,9 +145,6 @@ public class TicketsDao {
         Reservations r = new Reservations();
         Flights f = new Flights();
         ticket.setId(rs.getInt("id"));
-        //ticket.setOwner(rs.getString("owner"));
-        //ticket.setReservation(reservationsDao.get(rs.getInt("reservation")));
-        //ticket.setFlight(flightsDao.get(rs.getInt("flight")));
         f.setId(rs.getInt("flight"));
         r.setId(rs.getInt("reservation"));
         ticket.setFlight(f);
