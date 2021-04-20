@@ -22,6 +22,7 @@ public class UsersDao {
     private static final String DELETE = "{call del_user(?)}";
     private static final String ALL = "select * from userss";
     private static final String GET = "select * from userss where username = ?";
+    private static final String GET_USERS_FROM_FLIGHT = "select distinct * from userss u inner join reservations r on u.username = r.userID where r.flightId = ?";
     
     public UsersDao(){
         conn = ConnDB.getInstance();
@@ -77,6 +78,21 @@ public class UsersDao {
         }
     }
     
+    public List<Userss> searchByFlight(int flight){
+        List<Userss> result = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.getConn().prepareStatement(GET_USERS_FROM_FLIGHT);
+            ps.setInt(1, flight);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                result.add(constructUserFromFlight(rs));
+            }
+        }catch(SQLException ex){
+            System.out.println("Error: It was imposible to list the requested users.");
+        }
+        return result;
+    }
+    
     public void delete(String username){
         try {
             CallableStatement ps;
@@ -119,6 +135,21 @@ public class UsersDao {
     }
     
     private Userss constructUser(ResultSet rs) throws SQLException{
+        Userss user = new Userss();
+        user.setUsername(rs.getString("username"));
+        user.setPassword(rs.getString("password"));
+        user.setName(rs.getString("name"));
+        user.setLastname(rs.getString("last_name"));
+        user.setEmail(rs.getString("email"));
+        user.setDateOfBirth(rs.getDate("dateOfBirth"));
+        user.setAddress(rs.getString("address"));
+        user.setWorkphone(rs.getString("workphone"));
+        user.setCellphone(rs.getString("cellphone"));
+        user.setIsAdmin(rs.getInt("isAdmin"));
+        return user;
+    }
+    
+        private Userss constructUserFromFlight(ResultSet rs) throws SQLException{
         Userss user = new Userss();
         user.setUsername(rs.getString("username"));
         user.setPassword(rs.getString("password"));

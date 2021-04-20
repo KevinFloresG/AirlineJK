@@ -30,6 +30,7 @@ public class UsersService extends HttpServlet {
         
         switch(request.getServletPath()){
             case "/users/get" : get(request, response); break;
+            case "/users/flight" : getFromFlight(request, response); break;
             case "/users/login" : login(request, response); break;
             case "/users/add" : insert(request, response); break;
             case "/users/update/info" : updateInfo(request, response); break;
@@ -75,6 +76,16 @@ public class UsersService extends HttpServlet {
     private void get(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String id = request.getParameter("id");
         Userss user = dao.get(id);
+        String allJson = gson.toJson(user);
+        PrintWriter out = response.getWriter();
+        out.print(allJson);
+        out.flush();
+    }
+    
+    private void getFromFlight(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String id = request.getParameter("id");
+        int fId = Integer.parseInt(id);
+        List<Userss> user = dao.searchByFlight(fId);
         String allJson = gson.toJson(user);
         PrintWriter out = response.getWriter();
         out.print(allJson);

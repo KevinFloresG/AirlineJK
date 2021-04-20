@@ -144,6 +144,7 @@
         <url-pattern>/users/update/pass</url-pattern>
         <url-pattern>/users/delete</url-pattern>
         <url-pattern>/users/all</url-pattern>
+        <url-pattern>/users/flight</url-pattern>
         <url-pattern>/users/get</url-pattern>
         <url-pattern>/users/login</url-pattern>
     </servlet-mapping>
