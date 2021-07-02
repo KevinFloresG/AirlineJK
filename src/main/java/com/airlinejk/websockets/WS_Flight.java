@@ -60,7 +60,17 @@ public class WS_Flight {
             case "update":
                 updateFlight(s, request.getString("content"));
                 break;
+            case "updateSeats":
+                updateSeats(s, request.getInt("id"), request.getInt("availableSeats"));
+                break;
         }
+    }
+    
+    private void updateSeats(Session s, Integer id, Integer seats) throws IOException{
+        Flights f = dao.get(id);
+        f.setAvailableSeats(seats);
+        dao.updateFlightInfo(f);
+        broadcast(s, "update", gson.toJson(f, Flights.class));
     }
     
     private void updateFlight(Session s, String flight) throws IOException{
