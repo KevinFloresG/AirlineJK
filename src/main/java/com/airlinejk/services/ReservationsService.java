@@ -104,6 +104,12 @@ public class ReservationsService extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
+    
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
     @Override
     public String getServletInfo() {
